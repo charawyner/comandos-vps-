@@ -230,14 +230,14 @@ PrintLastLog yes
 AcceptEnv LANG LC_*
 Subsystem sftp /usr/lib/openssh/sftp-server
 UsePAM yes
-Banner /etc/banner
+Banner /etc/banner.dat
 TCPKeepAlive yes
 ClientAliveInterval 240
 ClientAliveCountMax 2
 UseDNS no
 EOFOpenSSH
 
-curl -4skL "https://www.dropbox.com/s/j4zs7g9de0ik0tj/sshsslbanner.txt" -o /etc/banner
+curl -4skL "https://raw.githubusercontent.com/charawyner/comandos-vps-/main/banner.dat" -o /etc/banner.dat
 
 sed -i '/password\s*requisite\s*pam_cracklib.s.*/d' /etc/pam.d/common-password && sed -i 's|use_authtok ||g' /etc/pam.d/common-password
 
@@ -257,7 +257,7 @@ echo -e "${azul}QUE PUERTOS DROPBEAR DESEA HABILITAR${cierre}"
 echo -e "${azul}PUERTO 143 SIEMPRE ESTARA HABILITADO${cierre}"
 echo -e "${azul}ELIJA UN PUERTO QUE NO ESTE OCUPADO${cierre}"
 echo -e "$bar2"
-read -p "$(echo -e "${amarillo}ingrese: ${cierre}")" -e -i 80 ptdpbr
+read -p "$(echo -e "${amarillo}ingrese: ${cierre}")" -e -i 110 ptdpbr
 cat > /etc/default/dropbear <<-EOF
 
 NO_START=0
@@ -301,7 +301,7 @@ cat <<'EOFStunnel1' > "/etc/default/$StunnelDir"
 ENABLED=1
 FILES="/etc/stunnel/*.conf"
 OPTIONS=""
-BANNER="/etc/banner"
+BANNER="/etc/banner.dat"
 PPP_RESTART=0
 # RLIMITS="-n 4096 -d unlimited"
 RLIMITS=""
